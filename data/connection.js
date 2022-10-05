@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 
+// creates connection to local host through mysql and accesses the database
 const connection = mysql.createConnection({
     host: "localhost",
     // Your MySQL username,
@@ -9,4 +10,5 @@ const connection = mysql.createConnection({
     database: "employee_tracker",
   });
   
+  // exports connection info for data/index usage
   module.exports = connection;

@@ -1,5 +1,6 @@
 const connection = require("./connection");
 
+// class based method to call functions that execute sql commands
 class DB {
   constructor(connection) {
     this.connection = connection;
@@ -28,12 +29,14 @@ class DB {
       );
   }
 
+  // creates new roles
   createNewRoles(role) {
     return this.connection
         .promise()
         .query('INSERT INTO roles SET ?', role)
   }
 
+  // updates current employees roles
   updateEmployeeRoles(employeeId, roleId) {
     return this.connection
         .promise()
@@ -44,6 +47,7 @@ class DB {
 }
 
   // EMPLOYEE FUNCTIONALITY
+  // lists all employees in database
   seeAllEmployees() {
     return this.connection
       .promise()
@@ -52,12 +56,14 @@ class DB {
       );
   }
 
+  // creates a new employee for the database
   createNewEmployee(employee) {
     return this.connection
       .promise()
       .query("INSERT INTO employees SET ?", employee);
   }
 
+    // deletes employee (did not get here)
   deleteEmployee(employeeId) {
     return this.connection
       .promise()
@@ -65,4 +71,5 @@ class DB {
   }
 }
 
+// Exports new DB class with ths information into our connection
 module.exports = new DB(connection);

@@ -1,3 +1,4 @@
+-- static values for population of the database
 INSERT INTO departments (name)
 VALUES
 ('Sales'),

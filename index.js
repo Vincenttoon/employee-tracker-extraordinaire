@@ -149,6 +149,8 @@ const addEmployee = () => {
                   value: employee_id,
                 })
               );
+
+            //   WHY NO MANAGER ASSIGN VVV
                 managerChoices.unshift({ name: "None", value: null });
               inquirer
                 .prompt([
@@ -217,9 +219,9 @@ const addRole = () => {
 const updateEmployee = () => {
   db.seeAllEmployees().then(([rows]) => {
     let employees = rows;
-    const employeeChoices = employees.map(({ employee_id, first_name, last_name }) => ({
+    const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
       name: `${first_name}, ${last_name}`,
-      value: employee_id,
+      value: id,
     }));
     inquirer
       .prompt([
@@ -232,7 +234,6 @@ const updateEmployee = () => {
       ])
       .then((response) => {
         let employeeId = response.employee_id;
-        console.log(employeeId);
         db.seeAllRoles().then(([rows]) => {
           let roles = rows;
           const roleChoices = roles.map(({ role_id, title }) => ({
@@ -250,7 +251,6 @@ const updateEmployee = () => {
             ])
             .then((response) => {
               let roleId = response.role_id;
-              console.log(roleId);
               db.updateEmployeeRoles(employeeId, roleId)
                 .then(() => console.log("Updated employee role!"))
                 .then(() => viewAllEmployees());

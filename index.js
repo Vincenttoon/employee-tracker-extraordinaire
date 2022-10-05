@@ -144,14 +144,13 @@ const addEmployee = () => {
             db.seeAllEmployees().then(([rows]) => {
               let employees = rows;
               const managerChoices = employees.map(
-                ({ employee_id, first_name, last_name }) => ({
+                ({ id, first_name, last_name }) => ({
                   name: `${first_name} ${last_name}`,
-                  value: employee_id,
+                  value: id,
                 })
               );
-
-            //   WHY NO MANAGER ASSIGN VVV
                 managerChoices.unshift({ name: "None", value: null });
+                console.log(managerChoices);
               inquirer
                 .prompt([
                   {

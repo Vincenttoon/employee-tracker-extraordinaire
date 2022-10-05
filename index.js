@@ -90,82 +90,174 @@ const addDepartment = () => {
   inquirer
     .prompt([
       {
-        name: "newDepartment",
+        name: "department",
         type: "input",
         message: "What is the name of your new department?",
       },
     ])
     .then((response) => {
-      let department = response.newDepartment;
+      let department = response.department;
       db.createNewDepartment(department);
     })
     .then(() => console.log("Your new department was added to the database!"))
-    .then(() => mainMenu());
+    .then(() => viewAllDepartments());
 };
 
 // HERE TO
-const addRole = () => {
-  inquirer.prompt([
-    {
-      name: "roleName",
-      type: "input",
-      message: "Please enter an employment role you would like to add:",
-    },
-    {
-      name: "roleSalary",
-      type: "input",
-      message: "What is the salary of this role?",
-    },
-    {
-      name: "roleDepartment",
-      type: "input",
-      message: "Where would you like to add your new role?",
-    },
-  ]);
+const addEmployee = () => {
+  inquirer
+    .prompt([
+      {
+        name: "first_name",
+        type: "input",
+        message: "What is the first name of your new employee?",
+      },
+      {
+        name: "last_name",
+        type: "input",
+        message: "What is the last name of your new employee?",
+      },
+    ])
+    .then((response) => {
+      let firstName = response.first_name;
+      console.log(firstName);
+      let lastName = response.last_name;
+      console.log(lastName);
+      db.seeAllRoles().then(([rows]) => {
+        let roles = rows;
+        const roleChoices = roles.map(({ role_id, title }) => ({
+          name: title,
+          value: role_id,
+        }));
+        inquirer
+          .prompt([
+            {
+              name: "role_id",
+              type: "list",
+              message: "What is the role of your new employee?",
+              choices: roleChoices,
+            },
+          ])
+          .then((response) => {
+            let roleId = response.role_id;
+            console.log(roleId);
+            db.seeAllEmployees().then(([rows]) => {
+              let employees = rows;
+              const managerChoices = employees.map(
+                ({ employee_id, first_name, last_name }) => ({
+                  name: `${first_name} ${last_name}`,
+                  value: employee_id,
+                })
+              );
+                managerChoices.unshift({ name: "None", value: null });
+              inquirer
+                .prompt([
+                  {
+                    name: "manager_id",
+                    type: "list",
+                    message: "Who is the manager of your new employee?",
+                    choices: managerChoices,
+                  },
+                ])
+                .then((response) => {
+                  let managerId = response.manager_id;
+                  console.log(managerId);
+                  let employees = {
+                    first_name: firstName,
+                    last_name: lastName,
+                    role_id: roleId,
+                    manager_id: managerId,
+                  };
+                  db.createNewEmployee(employees)
+                    .then(() =>
+                      console.log("New employee added to the database")
+                    )
+                    .then(() => viewAllEmployees());
+                });
+            });
+          });
+      });
+    });
 };
 
-const addEmployee = () => {
-  inquirer.prompt([
-    {
-      name: "add_first_name",
-      type: "input",
-      message: "What is the first name of your new employee?",
-    },
-    {
-      name: "add_last_name",
-      type: "input",
-      message: "What is the last name of your new employee?",
-    },
-    {
-      name: "add_role",
-      type: "list",
-      message: "What is the role of your new employee?",
-      choices: seeAllRoles(),
-    },
-    {
-      name: "add_manager",
-      type: "list",
-      message: "Who is the manager of your new employee?",
-      // choices: 'see all managers?
-    },
-  ]);
+const addRole = () => {
+  db.seeAllDepartments().then(([rows]) => {
+    let departments = rows;
+    const departmentChoices = departments.map(({ department_id, name }) => ({
+      name: name,
+      value: department_id,
+    }));
+    inquirer
+      .prompt([
+        {
+          name: "title",
+          type: "input",
+          message: "Please enter an employment role you would like to add:",
+        },
+        {
+          name: "salary",
+          type: "input",
+          message: "What is the salary of this role?",
+        },
+        {
+          name: "department_id",
+          type: "list",
+          message: "Where would you like to add your new role?",
+          choices: departmentChoices,
+        },
+      ])
+      .then((response) => {
+        db.createNewRoles(response)
+          .then(() => console.log(`Added new role to the database!`))
+          .then(() => viewAllRoles());
+      });
+  });
 };
 
 const updateEmployee = () => {
-  inquirer.prompt([
-    {
-      name: "update",
-      type: "list",
-      message: "Which employee do you want to update?",
-      choices: seeAllEmployees(),
-    },
-    {
-      name: "newRole",
-      type: "list",
-      message: "What is the new role for this employee?",
-      choices: seeAllRoles(),
-    },
-  ]);
+  db.seeAllEmployees().then(([rows]) => {
+    let employees = rows;
+    const employeeChoices = employees.map(({ employee_id, first_name, last_name }) => ({
+      name: `${first_name}, ${last_name}`,
+      value: employee_id,
+    }));
+    inquirer
+      .prompt([
+        {
+          name: "employee_id",
+          type: "list",
+          message: "Which employee do you want to update?",
+          choices: employeeChoices,
+        },
+      ])
+      .then((response) => {
+        let employeeId = response.employee_id;
+        console.log(employeeId);
+        db.seeAllRoles().then(([rows]) => {
+          let roles = rows;
+          const roleChoices = roles.map(({ role_id, title }) => ({
+            name: title,
+            value: role_id,
+          }));
+          inquirer
+            .prompt([
+              {
+                name: "role_id",
+                type: "list",
+                message: "What is the new role for this employee?",
+                choices: roleChoices,
+              },
+            ])
+            .then((response) => {
+              let roleId = response.role_id;
+              console.log(roleId);
+              db.updateEmployeeRoles(employeeId, roleId)
+                .then(() => console.log("Updated employee role!"))
+                .then(() => viewAllEmployees());
+            });
+        });
+      });
+  });
 };
 // HERE
 

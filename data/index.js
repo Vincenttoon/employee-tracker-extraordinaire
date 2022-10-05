@@ -34,6 +34,15 @@ class DB {
         .query('INSERT INTO roles SET ?', role)
   }
 
+  updateEmployeeRoles(employeeId, roleId) {
+    return this.connection
+        .promise()
+        .query('UPDATE employees SET role_id = ? WHERE employee_id = ?', [
+            roleId,
+            employeeId,
+        ]);
+}
+
   // EMPLOYEE FUNCTIONALITY
   seeAllEmployees() {
     return this.connection
@@ -46,13 +55,13 @@ class DB {
   createNewEmployee(employee) {
     return this.connection
       .promise()
-      .query("INSERT INTO employee SET ?", employee);
+      .query("INSERT INTO employees SET ?", employee);
   }
 
   deleteEmployee(employeeId) {
     return this.connection
       .promise()
-      .query("DELETE FROM employee WHERE id = ?", employeeId);
+      .query("DELETE FROM employees WHERE = ?", employeeId);
   }
 }
 

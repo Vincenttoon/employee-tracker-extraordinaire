@@ -1,5 +1,5 @@
 # Employee Tracker
-![Need photo of text insert](...)
+![Need photo of text insert](./assets/title.jpg)
 
 ## License
 ### [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -38,7 +38,6 @@ By: [Vincent Toon](https://github.com/vincenttoon)
 
 ## Tests
 
-n/a
 [Employee Tracker Video Demonstration](...)
 
 ## Usage

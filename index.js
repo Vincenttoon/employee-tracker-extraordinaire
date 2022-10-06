@@ -77,7 +77,7 @@ const viewAllDepartments = () => {
   // then assign them to rows
     .then(([rows]) => {
       let departments = rows;
-      console.log("\n");
+      // console.log("\n");
       // display departments in table
       console.table(departments);
     })

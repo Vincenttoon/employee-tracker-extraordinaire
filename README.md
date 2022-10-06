@@ -38,7 +38,7 @@ By: [Vincent Toon](https://github.com/vincenttoon)
 
 ## Tests
 
-[Employee Tracker Video Demonstration](...)
+[Employee Tracker Video Demonstration](https://drive.google.com/file/d/1QJjaNJ6SWj9D_mGSDWqYwiamMNUx2Do6/view)
 
 ## Usage
 

@@ -35,6 +35,7 @@ By: [Vincent Toon](https://github.com/vincenttoon)
 * Run (npm i). 
 * Install proper packages [npm i console.table](https://www.npmjs.com/package/console.table), [npm i inquirer](https://www.npmjs.com/package/inquirer), [npm i mysql2](https://www.npmjs.com/package/mysql2).
 * Run "node index.js" and browse your choices.
+![Command line prompts](./assets/command-line-action.jpg)
 
 ## Tests
 
@@ -54,7 +55,7 @@ By: [Vincent Toon](https://github.com/vincenttoon)
 
 * The application allows for viewing, additions and updates to employee statuses
 (Ex.4:)
-![Picture of command line results](./assets/table-creation.jpg)
+![Picture of command line results](./assets/mysql-literal.jpg)
 
 ## Contributors
 

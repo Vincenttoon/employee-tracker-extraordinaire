@@ -33,7 +33,7 @@ By: [Vincent Toon](https://github.com/vincenttoon)
 
 * Download code from codebase. 
 * Run (npm i). 
-* Install proper packages [npm i console.table](https://www.npmjs.com/package/console.table), [npm i inquirer](https://www.npmjs.com/package/inquirer), [npm i mysql2](https://www.npmjs.com/package/mysql2).
+* Install proper packages ([npm i console.table](https://www.npmjs.com/package/console.table), [npm i inquirer](https://www.npmjs.com/package/inquirer), [npm i mysql2](https://www.npmjs.com/package/mysql2)).
 * Run "node index.js" and browse your choices.
 ![Command line prompts](./assets/command-line-action.jpg)
 
